@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - To-Do App</title>
+    <link rel="stylesheet" href="style2.css" />
+</head>
+<body>
+    <div class="login-box">
+        <h2>Login / Register</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginBtn">Login</button>
+        <button id="registerBtn">Register</button>
+    </div>
+
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } 
+            from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+        //  Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqqHYUN33L7yeO02yIx6xm9WHif49dC4k",
+            authDomain: "to-do-list-81a94.firebaseapp.com",
+            projectId: "to-do-list-81a94",
+            storageBucket: "to-do-list-81a94.firebasestorage.app",
+            messagingSenderId: "800632225970",
+            appId: "1:800632225970:web:89d1c243e37d9fa29849ab",
+            measurementId: "G-M09Z5V8G72"
+        };
+
+        //  Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById("loginBtn").addEventListener("click", async () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                localStorage.setItem("uid", userCredential.user.uid);
+                window.location.href = "index.html";
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        document.getElementById("registerBtn").addEventListener("click", async () => {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                localStorage.setItem("uid", userCredential.user.uid);
+                window.location.href = "index.html";
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Already logged in 
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                localStorage.setItem("uid", user.uid);
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pro To‑Do</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#4facfe" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header class="app-header">
+      <h1>Pro To‑Do</h1>
+      <div class="header-actions">
+        <button id="themeToggle" title="Toggle dark/light">🌙 Dark Mode</button>
+          <button id="logoutBtn" title="Log out">🚪 Logout</button>
+        <button id="installBtn" hidden>⬇️ Install App</button>
+      </div>
+    </header>
+
+    <!-- STATS / PROGRESS -->
+    <section class="stats">
+      <div class="progress-container" title="Completion progress">
+        <div id="progressBar"></div>
+      </div>
+      <div id="statsText" class="stats-text">0 of 0 done (0%)</div>
+    </section>
+
+    <!-- INPUT BAR -->
+    <section class="task-input">
+      <button id="micBtn" class="icon-btn" title="Voice input">🎙️</button>
+      <input id="taskInput" type="text" placeholder="Add a new task…" />
+      <input id="notesInput" type="text" placeholder="Notes (optional)" />
+      <select id="prioritySelect" aria-label="Priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
+      <input id="dueDate" type="date" aria-label="Due date" />
+      <select id="recurringSelect" aria-label="Recurring">
+        <option value="none" selected>One‑time</option>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+      <select id="categorySelect" aria-label="Category">
+        <option value="general" selected>General</option>
+        <option value="work">Work</option>
+        <option value="personal">Personal</option>
+        <option value="study">Study</option>
+      </select>
+      <select id="reminderSelect" aria-label="Reminder">
+        <option value="off" selected>No reminder</option>
+        <option value="5">5 min before</option>
+        <option value="15">15 min before</option>
+        <option value="30">30 min before</option>
+        <option value="60">1 hour before</option>
+      </select>
+      <button id="addBtn">Add</button>
+    </section>
+
+    <!-- FILTERS / SORT -->
+    <section class="filters">
+      <div class="filter-buttons">
+        <button data-filter="all" class="filter active">All</button>
+        <button data-filter="pending" class="filter">Pending</button>
+        <button data-filter="completed" class="filter">Completed</button>
+      </div>
+      <input id="searchInput" type="text" placeholder="Search…" />
+      <label class="sort-label">
+        Sort:
+        <select id="sortSelect">
+          <option value="date">Due date</option>
+          <option value="priority">Priority</option>
+          <option value="status">Status</option>
+          <option value="created">Created</option>
+          <option value="manual" selected>Manual</option>
+        </select>
+      </label>
+    </section>
+
+    <!-- TASK LIST -->
+    <ul id="taskList" class="task-list" aria-live="polite"></ul>
+
+    <!-- FOOTER ACTIONS -->
+    <section class="footer-actions">
+      <button id="clearCompleted">Clear Completed</button>
+
+      <div class="import-export">
+        <button id="exportJSON">Export JSON</button>
+        <button id="exportCSV">Export CSV</button>
+        <label class="import-label">
+          <input id="importFile" type="file" accept=".json" hidden />
+          <span class="btn-like">Import JSON</span>
+        </label>
+      </div>
+      <!--  CLOUD SYNC -->
+      <div class="cloud-sync">
+        <button onclick="pushToCloud()">☁️ Push to Cloud</button>
+        <button onclick="pullFromCloud()">⬇️ Pull from Cloud</button>
+      </div>
+    </section>
+  </div>
+
+   <script type="module" src="script.js"></script>
+</body>
+
+</html>
